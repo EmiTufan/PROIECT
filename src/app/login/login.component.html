@@ -1,0 +1,326 @@
+
+<div id="main"   class="main black" [className]="theme ?  'main black' : 'main white' ">
+
+    <div class="login_website">
+        <!-- header -->
+        <div class="header active " [ngClass]="{'blur': toggle}">
+           <div class="logo_dark"> 
+            <div class="logo">
+                <h1>
+                    <a routerLink="/login" id="logo">{{logo}}</a>
+                </h1>
+            </div>
+            <div class="theme-container shadow-dark">
+                <svg width="30" (click)="changedark()" *ngIf="!theme" height="30" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1.5v1.575"></path>
+                    <path fill="currentColor" fill-rule="evenodd" stroke="none" d="M19.425 4.575 18.31 5.69l1.114-1.114Z" clip-rule="evenodd"></path>
+                    <path d="M19.425 4.575 18.31 5.69"></path>
+                    <path d="M22.5 12h-1.575"></path>
+                    <path fill="currentColor" fill-rule="evenodd" stroke="none" d="m19.425 19.424-1.114-1.113 1.114 1.113Z" clip-rule="evenodd"></path>
+                    <path d="m19.425 19.424-1.114-1.113"></path>
+                    <path d="M12 22.5v-1.575"></path>
+                    <path fill="currentColor" fill-rule="evenodd" stroke="none" d="m4.575 19.424 1.114-1.113-1.114 1.113Z" clip-rule="evenodd"></path>
+                    <path d="m4.575 19.424 1.114-1.113"></path>
+                    <path d="M1.5 12h1.575"></path>
+                    <path fill="currentColor" fill-rule="evenodd" stroke="none" d="M4.575 4.575 5.69 5.69 4.575 4.575Z" clip-rule="evenodd"></path>
+                    <path d="M4.575 4.575 5.69 5.69"></path>
+                    <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"></path>
+                  </svg>
+                  <svg  (click)="changedark()" *ngIf="theme" width="30" height="30" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.026 2.205a6.364 6.364 0 1 0 7.768 7.768c.135.655.206 1.333.206 2.027 0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2c.694 0 1.372.07 2.026.205Z"></path>
+                  </svg>
+            </div>
+           </div>
+            <button class="hamburger hamburger--collapse" type="button" [ngClass]="{'is-active': toggle}"
+                (click)="clickEvent($event)">
+                <span class="hamburger-true " *ngIf="!toggle">
+                    <svg width="46" height="46" fill="none" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 10H3"></path>
+                        <path d="M21 6H3"></path>
+                        <path d="M21 14H3"></path>
+                        <path d="M17 18H3"></path>
+                    </svg>
+                </span>
+                <span class="hamburger-false" *ngIf="toggle">
+                    <svg width="46" height="46" fill="none" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6 6 18"></path>
+                        <path d="m6 6 12 12"></path>
+                    </svg>
+                </span>
+            </button>
+        </div>
+        <!-- login -->
+        <section class="section-header">
+            <div class="login-left">
+                <h1 *ngIf="singup">Dont`t have an account? </h1>
+                <h1 *ngIf="!singup">Already have an account? </h1>
+                <p *ngIf="singup"> Create a free account and monitor your appointments.</p>
+                <p *ngIf="!singup"> Please login via email and passowrd!</p>
+                <button id="button_create_account" (click)="createaccount() " *ngIf="!singup">Login an account</button>
+                <button id="button_create_account" (click)="createaccount()" *ngIf="singup">Create an account</button>
+            </div>
+            <div class="login-right">
+                <h1 *ngIf="!toggle && singup && !spinner">Sign in to aXF.</h1>
+                <h1 *ngIf="!toggle  && !singup && !spinner">Sing up in to aXF.</h1>
+                <div class="error-message" *ngIf="messageSuccess">
+                    <div class="profile_error">
+                        <img src="../../assets/warning.png" alt="">
+                    </div>
+                    <div class="info_text">
+                        <h1>{{error}}</h1>
+                        <p>{{errorInfo}}</p>
+                    </div>
+                </div>
+                <div class="lds-spinner" *ngIf="spinner && !toggle">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="menu" [ngClass]="{'account': !toggle}" (scroll)="onScroll($event)">
+                    <div class="toogleMenu">
+                        <a routerLink="/home">
+                            <div class="menuList" id="">
+                                <div class="profile">
+                                    <img src="../../assets/menu/rocket-front-premium.png" alt="">
+                                </div>
+                                <div class="info_text">
+                                    <h1>Home</h1>
+                                    <p>More information about my work.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a routerLink="/home">
+                            <div class="menuList" id="">
+                                <div class="profile">
+                                    <img src="../../assets/menu/trophy-front-premium.png" alt="">
+                                </div>
+                                <div class="info_text">
+                                    <h1>About Me</h1>
+                                    <p>More information about my person.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a routerLink="/home">
+                            <div class="menuList" id="">
+                                <div class="profile">
+                                    <img src="../../assets/menu/paint-kit-front-premium.png" alt="">
+                                </div>
+                                <div class="info_text">
+                                    <h1>Services</h1>
+                                    <p>More information about my person.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a routerLink="/home">
+                            <div class="menuList" id="">
+                                <div class="profile">
+                                    <img src="../../assets/menu/calender-front-premium.png" alt="">
+                                </div>
+                                <div class="info_text">
+                                    <h1>Check the book</h1>
+                                    <p>More information about my person .</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a routerLink="/home">
+                            <div class="menuList" id="">
+                                <div class="profile">
+                                    <img src="../../assets/menu/camera-front-premium.png" alt="">
+                                </div>
+                                <div class="info_text">
+                                    <h1>Pictures</h1>
+                                    <p>More information about my person.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a routerLink="/home">
+                            <div class="menuList" id="">
+                                <div class="profile">
+                                    <img src="../../assets/menu/wallet-front-premium.png" alt="">
+                                </div>
+                                <div class="info_text">
+                                    <h1>Price</h1>
+                                    <p>More information about my person.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a routerLink="/home">
+                            <div class="menuList" id="">
+                                <div class="profile">
+                                    <img src="../../assets/menu/phone-missed-front-premium.png" alt="">
+                                </div>
+                                <div class="info_text">
+                                    <h1>Contact</h1>
+                                    <p>More information about my person.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a routerLink="/home">
+                            <div class="menuList" id="">
+                                <div class="profile">
+                                    <img src="../../assets/menu/map-pin-front-premium.png" alt="">
+                                </div>
+                                <div class="info_text">
+                                    <h1>Location</h1>
+                                    <p>More information about my person.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a routerLink="/home">
+                            <div class="menuList" id="">
+                                <div class="profile">
+                                    <img src="../../assets/menu/gift-front-premium.png" alt="">
+                                </div>
+                                <div class="info_text">
+                                    <h1>Gift</h1>
+                                    <p>More information about my person.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+                <form class="forms" *ngIf="!toggle && singup && !spinner ">
+                    <div class="login-input">
+                        <input type="text" required name="email" [(ngModel)]="email" placeholder="Email adress">
+                        <label for="">
+                            <svg width="46" height="46" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path>
+                                <path d="M21 22a9 9 0 1 0-18 0"></path>
+                            </svg>
+                        </label>
+                    </div>
+                    <div class="login-input">
+                        <input type="text" required name="password" [(ngModel)]="password" placeholder="Password">
+                        <label for="">
+                            <svg width="46" height="46" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 11H4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1Z">
+                                </path>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                <path d="M12 15v3"></path>
+                            </svg>
+                        </label>
+                    </div>
+                    <div class="login-checkbox">
+                        <div>
+                            <input type="checkbox" name="" id="">
+                            <label>Remember me </label>
+                        </div>
+                        <div>
+                            <label for="forget"></label>
+                            <a href="" id="forget">Forget password?</a>
+                        </div>
+                    </div>
+                    <button class="login-button" type="submit" (click)=" senddata()"> Sing in</button>
+                </form>
+                <form class="sing-up" *ngIf="!toggle && !singup && !spinner">
+                    <div class="login-input">
+                        <input type="text" required name="Fname" [(ngModel)]="Fname" placeholder="First Name">
+                        <label for="">
+                            <svg width="46" height="46" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path>
+                                <path d="M21 22a9 9 0 1 0-18 0"></path>
+                            </svg>
+                        </label>
+                    </div>
+                    <div class="login-input">
+                        <input type="text" required name="Lname" [(ngModel)]="Lname" placeholder="Last Name">
+                        <label for="">
+                            <svg width="46" height="46" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path>
+                                <path d="M21 22a9 9 0 1 0-18 0"></path>
+                            </svg>
+                        </label>
+                    </div>
+                    <div class="login-input">
+                        <input type="text" required name="email" [(ngModel)]="email" placeholder="Email adress">
+                        <label for="">
+                            <svg width="46" height="46" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 19.5h20v-15H2v15Z"></path>
+                                <path d="M2 4.5 12 12l10-7.5"></path>
+                                <path d="M12 4.5H2V12"></path>
+                                <path d="M22 12V4.5H12"></path>
+                            </svg>
+                        </label>
+                    </div>
+                    <div class="login-input">
+                        <input type="text" required name="phonenr" [(ngModel)]="phonenr" placeholder="Phone Number">
+                        <label for="">
+                            <svg width="46" height="46" fill="none" stroke="currentColor" stroke-linejoin="round"
+                                stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M8.57 3.765a.98.98 0 0 1 .856.504l1.198 2.158a.98.98 0 0 1 .02.914L9.49 9.65s.334 1.72 1.734 3.12c1.4 1.4 3.114 1.728 3.114 1.728l2.309-1.154a.98.98 0 0 1 .914.02l2.164 1.204c.311.172.504.5.504.856v2.485c0 1.265-1.175 2.18-2.374 1.774-2.463-.83-6.286-2.413-8.709-4.836C6.723 12.425 5.141 8.602 4.31 6.14c-.404-1.199.51-2.374 1.775-2.374H8.57Z">
+                                </path>
+                            </svg>
+                        </label>
+                    </div>
+                    <div class="login-input">
+                        <input type="text" required name="password" [(ngModel)]="password" placeholder="Password">
+                        <label for="">
+                            <svg width="46" height="46" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 11H4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1Z">
+                                </path>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                <path d="M12 15v3"></path>
+                            </svg>
+                        </label>
+                    </div>
+                    <div class="login-input">
+                        <input type="text" required name="confirmpassword" [(ngModel)]="confirmpassword"
+                            placeholder="Password">
+                        <label for="">
+                            <svg width="46" height="46" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 11H4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1Z">
+                                </path>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                <path d="M12 15v3"></path>
+                            </svg>
+                        </label>
+                    </div>
+                    <div class="confirm-term">
+                        <h1>By signing up, I agree to Termly's <a href="">Terms of Use</a> and <a href="">Privacy
+                                Policy</a>
+                        </h1>
+                    </div>
+                    <button class="login-button" type="submit" (click)=" singupdata()"> Sign Up</button>
+                </form>
+
+                <div class="login-mobile" *ngIf="!toggle">
+                    <p *ngIf="singup && !spinner">Dont`t have an account?</p>
+                    <p *ngIf="!singup && !spinner">Already have an account?</p>
+                    <a (click)="createaccount()" *ngIf="singup && !spinner">Sing up</a>
+                    <a (click)="createaccount() " *ngIf="!singup && !spinner">Login</a>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
